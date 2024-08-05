@@ -1,7 +1,7 @@
 {
   "name": "easy-deploy-cli",
   "private": false,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "commonjs",
   "author": "dedicatus545",
   "license": "MIT",
