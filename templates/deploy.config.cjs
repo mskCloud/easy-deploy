@@ -1,4 +1,4 @@
-export default {
+const config = {
   // 压缩类型，目前仅支持 zip
   compressType: "zip",
   // 服务器部署环境
@@ -26,23 +26,25 @@ export default {
         // 压缩包名称
         zipName: "dist",
         // 压缩包存放的位置，若保留
-        zipPath: "/data",
+        zipPath: "../",
         // 是否保留压缩包，若保留，则附加日期后缀，如：dist-[YYYY-MM-DD-hh-mm-ss]
         isRetain: false,
       },
       // 服务器远程部署目录
       remote: {
         // 部署项目的位置
-        distPath: "/data",
+        distPath: "/home",
         // 部署 dist 名称，也是压缩包解压后的文件名
         distName: "dist",
         // 压缩包名称
         zipName: "dist",
         // 压缩包存放的位置，若保留
-        zipPath: "/data",
+        zipPath: "/home",
         // 是否保留压缩包，若保留，则附加日期后缀，如：dist-[YYYY-MM-DD-hh-mm-ss]
         isRetain: false,
       },
     },
   ],
 }
+
+module.exports = config

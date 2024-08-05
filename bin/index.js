@@ -23,11 +23,14 @@ program
   })
 
 program
-  .command("start <env>")
+  .command("run <env>")
   .description("根据选择的环境开始部署")
   .action(async function (env) {
     try {
-      const config = require(path.join(path.resolve(), "/deploy/deploy.config.js"))
+      let config = require(path.join(path.resolve(), "/deploy/deploy.config.cjs"))
+      if (!config) {
+        config = require(path.join(path.resolve(), "/deploy/deploy.config.js"))
+      }
       successLog("(1) 配置文件加载成功")
       deploy(config, env)
     } catch (error) {
