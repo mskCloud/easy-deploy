@@ -25,14 +25,16 @@ program
 program
   .command("run <env>")
   .description("根据选择的环境开始部署")
-  .action(async function (env) {
+  .option('-np --nopack', '跳过打包')
+  .action(async function (env, option) {
     try {
       let config = require(path.join(path.resolve(), "/deploy/deploy.config.cjs"))
       if (!config) {
         config = require(path.join(path.resolve(), "/deploy/deploy.config.js"))
       }
       successLog("(1) 配置文件加载成功")
-      deploy(config, env)
+      const nopack = option.nopack ? true : false
+      deploy(config, env, { ...option, nopack })
     } catch (error) {
       failLog("(1) 配置文件加载失败", error)
       process.exit(1)
