@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "allowJs": true,
+    "strict": true,
+    "resolvePackageJsonImports": true
+  },
+  "include": ["lib/*.js", "bin/*.js", "tools/*.js"]
+}
