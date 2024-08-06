@@ -1,7 +1,7 @@
 {
   "name": "easy-deploy-cli",
   "private": false,
-  "version": "1.1.2",
+  "version": "1.1.3",
   "type": "commonjs",
   "author": "dedicatus545",
   "license": "MIT",
@@ -26,5 +26,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/mskCloud/easy-deploy"
-  }
+  },
+  "keywords": ["node-ssh", "deploy"]
 }
