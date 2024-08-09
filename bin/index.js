@@ -11,7 +11,7 @@ const { failLog, successLog } = require("../tools/index.js")
 const program = new Command()
 const version = packageJson.version
 
-program.name("easy deploy")
+program.name("Easy Deploy Cli")
 program.description("Finally, you can get lazy about deploying projects")
 program.version(version, "-v, --version")
 
@@ -25,7 +25,8 @@ program
 program
   .command("run <env>")
   .description("根据选择的环境开始部署")
-  .option('-np --nopack', '跳过打包')
+  .option("-np --nopack", "跳过打包")
+  .option("-d --del", "删除dist文件夹")
   .action(async function (env, option) {
     try {
       let config = require(path.join(path.resolve(), "/deploy/deploy.config.cjs"))
@@ -33,11 +34,10 @@ program
         config = require(path.join(path.resolve(), "/deploy/deploy.config.js"))
       }
       successLog("(1) 配置文件加载成功")
-      const nopack = option.nopack ? true : false
-      deploy(config, env, { ...option, nopack })
+      deploy(config, env, option)
     } catch (error) {
       failLog("(1) 配置文件加载失败", error)
-      process.exit(1)
+      throw error
     }
   })
 
