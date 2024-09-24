@@ -15,5 +15,5 @@
     "strict": true,
     "resolvePackageJsonImports": true
   },
-  "include": ["lib/*.js", "bin/*.js", "tools/*.js", "templates/*.js", "templates/deploy.config.cjs"]
+  "include": ["lib/*.js", "bin/*.js", "tools/*.js", "templates/*.js", "templates/deploy.config.js"]
 }
