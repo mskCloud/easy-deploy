@@ -1,17 +1,18 @@
 #! /usr/bin/env node
 
-import path from 'path'
-import url from 'node:url'
 import { Command } from 'commander'
-
+import { readFile } from 'fs/promises'
+import path from 'path'
 import init from '../lib/init.js'
 import deploy from '../lib/deploy.js'
-import { successLog, failLog, fetchFile } from '../tools/index.js'
+import { logStep, fetchFile, useCurrentPosition } from '../tools/index.js'
 
-let version = '2.0.0'
+let version = '0.0.0'
 
 const setVersion = async () => {
-    const packageJson = await fetchFile('/package.json', 'json')
+    const { dirname } = useCurrentPosition(import.meta.url)
+    const res = await readFile(path.resolve(dirname, '../package.json'))
+    const packageJson = JSON.parse(res)
     version = packageJson.version
     return version
 }
@@ -26,28 +27,24 @@ const createProgram = () => {
     program
         .command('init')
         .description('初始化部署相关配置')
-        .action(function () {
-            init()
+        .option('-s --skip', '跳过将deploy添加至.gitignore')
+        .action(function (option) {
+            init(option)
         })
-
-    program
-        .command('test')
-        .description('初始化部署相关配置')
-        .action(function () {})
 
     program
         .command('run <env>')
         .description('根据选择的环境开始部署')
-        .option('-np --nopack', '跳过打包')
+        .option('-s --skip', '跳过项目构建')
         .option('-d --del', '删除dist文件夹')
+        .option('-c --check', '检查当前配置')
+        .option('-ts --testSSh', '测试ssh连接')
         .action(async function (env, option) {
             try {
                 const config = await fetchFile('/deploy/deploy.config.js')
-                successLog('(1) 配置文件加载成功')
-                console.log(config.default)
                 deploy(config.default, env, option)
             } catch (error) {
-                failLog('(1) 配置文件加载失败', error)
+                logStep(0, '配置文件读取失败，请检查deploy.config.js是否存在？', 'fail')
                 throw error
             }
         })
@@ -56,8 +53,12 @@ const createProgram = () => {
 }
 
 async function createCli() {
-    await setVersion()
-    createProgram()
+    try {
+        await setVersion()
+        createProgram()
+    } catch (error) {
+        throw error
+    }
 }
 
 createCli()

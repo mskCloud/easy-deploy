@@ -30,4 +30,19 @@ const fetchFile = async (u, type) => {
 const successLog = (info, ...arg) => console.log(chalk.green(info, ...arg))
 const failLog = (info, ...arg) => console.log(chalk.red(info, ...arg))
 
-export { getCurrentDate, successLog, failLog, fetchFile }
+const logStep = (step = 0, msg = '', type = 'success') => {
+    const message = `(${step}) ${msg}`
+    const logFunc = type === 'success' ? successLog : failLog
+    return logFunc(message)
+}
+
+const useCurrentPosition = (u) => {
+    const filename = url.fileURLToPath(u)
+    const dirname = path.dirname(filename)
+    return {
+        filename,
+        dirname,
+    }
+}
+
+export { getCurrentDate, successLog, failLog, fetchFile, logStep, useCurrentPosition }
