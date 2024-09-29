@@ -41,10 +41,10 @@ const createProgram = () => {
         .option('-ts --testSSh', '测试ssh连接')
         .action(async function (env, option) {
             try {
-                const config = await fetchFile('/deploy/deploy.config.js')
+                const config = await fetchFile('/deploy/deploy.config.mjs')
                 deploy(config.default, env, option)
             } catch (error) {
-                logStep(0, '配置文件读取失败，请检查deploy.config.js是否存在？', 'fail')
+                logStep(0, '配置文件读取失败，请检查deploy.config.mjs是否存在？', 'fail')
                 throw error
             }
         })
